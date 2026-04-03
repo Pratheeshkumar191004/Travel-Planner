@@ -1,0 +1,282 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+.container {
+    display: flex;
+    height: 100vh;
+}
+.content-container {
+    flex: 1;
+    padding: 20px;
+    overflow-y: auto;
+    max-width: 400px;
+}
+#map {
+    flex: 2;
+    transition: background 1s ease-out;
+    background-size: cover;
+    background-color: -webkit-focus-ring-color;
+}
+#map.faded-out {
+    background: dimgray;
+}
+.leaflet-container {
+    font: 12px/1.5 "Helvetica Neue", Arial, Helvetica, sans-serif;
+}
+@keyframes blink {
+    from { opacity: 1; }
+    50% { opacity: 0; }
+    to { opacity: 1; }
+}
+.highlighted-path {
+    stroke-dasharray: 0;
+    animation: blink 1s infinite;
+}
+.highlighted-station {
+    background-color: yellow;
+    border-radius: 50%;
+    padding: 5px;
+    animation: blink 1s infinite;
+}
+.form-overlay {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    z-index: 1000;
+}
+.form-overlay img {
+    display: block;
+    margin: 0 auto 20px;
+    width: 80px;
+}
+.form-overlay select, .form-overlay input, .form-overlay button {
+    width: calc(100% - 40px);
+    padding: 10px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 20px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+.form-overlay button {
+    background-color: #4CAF50;
+    color: white;
+    cursor: pointer;
+    font-size: 16px;
+}
+.form-overlay button:hover {
+    background-color: #45a049;
+}
+.form-overlay .train-image {
+    width: 100%;
+    margin-top: 20px;
+    border-radius: 15px;
+}
+.info-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+.info-box {
+    text-align: center;
+    margin: 0 10px;
+}
+.col-md-12 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 290px;
+}
+.info-group {
+    display: grid;
+    grid-template-columns: repeat(2, 2fr);
+    grid-gap: 20px;
+    width: 80%;
+    max-width: 600px;
+}
+.info-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 40px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    min-width: 200px;
+    max-width: 250px;
+    outline-width: 1px;
+    outline-offset: 0;
+    outline-color: rgba(0, 139, 207, 0.75);
+    outline-style: solid;
+    animation: animateOutline 4s ease infinite;
+}
+@keyframes animateOutline {
+    0% {
+        outline-width: 1px;
+        outline-offset: 0;
+        outline-color: rgba(0, 130, 206, 0);
+    }
+    10% {
+        outline-color: rgba(0, 130, 206, 0.75);
+    }
+    50% {
+        outline-width: 7px;
+        outline-offset: 4px;
+        outline-color: rgba(0, 130, 206, 0);
+    }
+    100% {
+        outline-width: 7px;
+        outline-offset: 4px;
+        outline-color: rgba(102, 102, 102, 0);
+    }
+}
+.fare-box .label,
+.stops-box .label,
+.duration-box .label,
+.distance-box .label {
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.fare-box .info-icon,
+.stops-box .info-icon,
+.duration-box .info-icon,
+.distance-box .info-icon {
+    width: 40px;
+    height: auto;
+    margin-bottom: 5px;
+}
+#myList1 {
+    color: black;
+    padding: 15px;
+    width: 100%;
+    height: 300px !important;
+    border: 0px solid #ccc;
+}
+.circle {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-size: 1.0em;
+    margin: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+.circle-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+.train-info-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+.train-info-container .train-info-item {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+.train-info-container .train-info-item:last-child {
+    margin-right: 0;
+}
+.train-info-container .train-info-item img {
+    margin-right: 5px;
+    width: 30px;
+    height: 30px;
+}
+.highlight {
+    border: 5px solid white;
+    padding: 5px;
+    border-radius: 1px;
+}
+/* Animation for moving train */
+.train-marker {
+    background-image: url('train-marker.png');
+    background-size: cover;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    cursor: pointer;
+    transform: rotate(0deg);
+    transition: transform 0.3s ease;
+    z-index: 1000;
+}
+.moving-path {
+    stroke-dasharray: 10;
+    animation: dash 30s linear infinite;
+}
+@keyframes dash {
+    to {
+        stroke-dashoffset: -1000;
+    }
+}
+/* Add these new styles at the end of your existing CSS */
+
+.distance-marker {
+    background-color: white;
+    border: 2px solid purple;
+    border-radius: 10px;
+    padding: 2px 5px;
+    font-weight: bold;
+    color: purple;
+    text-align: center;
+    box-shadow: 0 0 5px rgba(0,0,0,0.3);
+}
+
+.nearby-station-popup .leaflet-popup-content {
+    min-width: 100px;
+}
+
+.nearby-station-popup .leaflet-popup-content-wrapper {
+    border-radius: 8px;
+}
+
+.btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+    transition: all 0.15s ease-in-out;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #007bff;
+    border-color: #007bff;
+}
+
+.btn-success {
+    color: #fff;
+    background-color: #28a745;
+    border-color: #28a745;
+}
+
+.btn-sm {
+    padding: 0.25rem 0.5rem;
+    font-size: 0.875rem;
+    line-height: 1.5;
+    border-radius: 0.2rem;
+}
+
+.mt-2 {
+    margin-top: 0.5rem;
+}
